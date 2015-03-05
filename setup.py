@@ -24,14 +24,16 @@ readme_path = os.path.join(current_directory, readme_filename)
 try:
     with open(readme_path, 'r') as f:
         readme = f.read()
-except:
+except Exception as e:
+    print (e)
     print("Failed to open %s" % readme_path)
 
 try:
     import pypandoc
     readme = pypandoc.convert(readme, to='rst', format='md')
-except:
-    print("Conversion of long_description from MD to reStructuredText failed...")
+except Exception as e:
+    print(e)
+    print("Conversion of long_description from MD to reStructuredText failed")
     pass
 
 
