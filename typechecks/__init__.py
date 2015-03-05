@@ -6,12 +6,16 @@ from __future__ import print_function, division, absolute_import
 
 # In Python 3, the "unicode" and "long" types went away.
 string_types = (str,)  # Python 2 and 3.
-try: string_types += (unicode,) # Python 2.
-except NameError: pass  # Python 3.
+try:
+    string_types += (unicode,)  # Python 2.
+except NameError:
+    pass  # Python 3.
 
 integer_types = (int,)  # Python 2 and 3.
-try: integer_types += (long,)  # Python 2.
-except NameError: pass  # Python 3.
+try:
+    integer_types += (long,)  # Python 2.
+except NameError:
+    pass  # Python 3.
 
 def is_string(obj):
     """
@@ -72,10 +76,10 @@ def require_instance(obj, types=None, name=None, type_name=None, truncate_at=80)
                 type_name = "one of " + ", ".join(str(t) for t in types)
             except TypeError:
                 type_name = str(types)
-        raise TypeError(
-            (("%s: " % name) if name else "") +
-            "expected %s. Got: '%s' of type '%s'"
-                % (type_name, obj_string, type(obj)))
+        name_string = ("%s: " % name) if name else ""
+        error_message = "%sexpected %s. Got: '%s' of type '%s'" % (
+            name_string, type_name, obj_string, type(obj))
+        raise TypeError(error_message)
 
 def require_iterable_of(objs, types, name=None, type_name=None, truncate_at=80):
     """
@@ -103,4 +107,3 @@ def require_iterable_of(objs, types, name=None, type_name=None, truncate_at=80):
         element_name = prefix + ("element at index %d" % i)
         require_instance(obj, types, element_name, type_name, truncate_at)
     assert False, "Shouldn't reach here."
-

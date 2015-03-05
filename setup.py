@@ -12,39 +12,48 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import print_function
 import os
 
-readme_filename = os.path.join(os.path.dirname(__file__), 'README.md')
-with open(readme_filename, 'r') as f:
-  readme = f.read()
+from setuptools import setup
+
+readme_filename = "README.md"
+current_directory = os.path.dirname(__file__)
+readme_path = os.path.join(current_directory, readme_filename)
 
 try:
-  import pypandoc
-  readme = pypandoc.convert(readme, to='rst', format='md')
-except:
-  print("Conversion of long_description from MD to reStructuredText failed...")
-  pass
+    with open(readme_path, 'r') as f:
+        readme = f.read()
+except Exception as e:
+    print (e)
+    print("Failed to open %s" % readme_path)
 
+try:
+    import pypandoc
+    readme = pypandoc.convert(readme, to='rst', format='md')
+except Exception as e:
+    print(e)
+    print("Conversion of long_description from MD to reStructuredText failed")
+    pass
 
-from setuptools import setup
 
 if __name__ == '__main__':
     setup(
         name='typechecks',
-        version="0.0.0",
+        version="0.0.1",
         description="Helper functions for runtime type checking",
-      	author="Tim O'Donnell",
+        author="Tim O'Donnell",
         author_email="tim {dot} odonnell {at} mssm {dot} edu",
-      	url="https://github.com/hammerlab/typechecks",
+        url="https://github.com/hammerlab/typechecks",
         license="http://www.apache.org/licenses/LICENSE-2.0.html",
         classifiers=[
             'Development Status :: 3 - Alpha',
             'Environment :: Console',
             'Operating System :: OS Independent',
-	    'Intended Audience :: Developers',
+            'Intended Audience :: Developers',
             'License :: OSI Approved :: Apache Software License',
             'Programming Language :: Python',
-             ],
+        ],
         install_requires=[],
         long_description=readme,
         packages=['typechecks'],
