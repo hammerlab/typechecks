@@ -21,6 +21,8 @@ readme_filename = "README.md"
 current_directory = os.path.dirname(__file__)
 readme_path = os.path.join(current_directory, readme_filename)
 
+# if README parsing fails, we'll still at least have this empty string
+readme = ""
 try:
     with open(readme_path, 'r') as f:
         readme = f.read()
@@ -40,7 +42,7 @@ except Exception as e:
 if __name__ == '__main__':
     setup(
         name='typechecks',
-        version="0.0.1",
+        version="0.0.2",
         description="Helper functions for runtime type checking",
         author="Tim O'Donnell",
         author_email="tim {dot} odonnell {at} mssm {dot} edu",
