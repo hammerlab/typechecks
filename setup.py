@@ -1,4 +1,4 @@
-# Copyright (c) 2014. Mount Sinai School of Medicine
+# Copyright (c) 2014-2018. Mount Sinai School of Medicine
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,18 +22,19 @@ current_directory = os.path.dirname(__file__)
 readme_path = os.path.join(current_directory, readme_filename)
 
 # if README parsing fails, we'll still at least have this empty string
-readme = ""
 try:
     with open(readme_path, 'r') as f:
-        readme = f.read()
+        readme_markdown = f.read()
 except Exception as e:
+    readme_markdown = ""
     print (e)
     print("Failed to open %s" % readme_path)
 
 try:
     import pypandoc
-    readme = pypandoc.convert(readme, to='rst', format='md')
+    readme_restructured = pypandoc.convert(readme_markdown, to='rst', format='md')
 except Exception as e:
+    readme_restructured = readme_markdown
     print(e)
     print("Conversion of long_description from MD to reStructuredText failed")
     pass
@@ -42,11 +43,11 @@ except Exception as e:
 if __name__ == '__main__':
     setup(
         name='typechecks',
-        version="0.0.2",
+        version="0.1.0",
         description="Helper functions for runtime type checking",
         author="Tim O'Donnell",
-        author_email="tim {dot} odonnell {at} mssm {dot} edu",
-        url="https://github.com/hammerlab/typechecks",
+        author_email="tim.odonnell@mssm.edu",
+        url="https://github.com/openvax/typechecks",
         license="http://www.apache.org/licenses/LICENSE-2.0.html",
         classifiers=[
             'Development Status :: 3 - Alpha',
@@ -57,6 +58,6 @@ if __name__ == '__main__':
             'Programming Language :: Python',
         ],
         install_requires=[],
-        long_description=readme,
+        long_description=readme_restructured,
         packages=['typechecks'],
     )
